@@ -2,9 +2,9 @@ package rest
 
 import (
 	"encoding/json"
+	"errors"
 
-	"github.com/pkg/errors"
-	"github.com/sidhman/clean-architecture/pkg/models"
+	"github.com/sidh/clean-architecture/internal/models"
 )
 
 // Valid URL query params
@@ -20,6 +20,7 @@ var (
 	ErrValueMissing  = errors.New("value missing")
 	ErrValueInvalid  = errors.New("invalid value")
 	ErrForbidden     = errors.New("forbidden")
+	ErrKeyNotFound   = errors.New("key not found")
 	ErrInternalError = errors.New("internal server error")
 )
 

@@ -3,8 +3,8 @@ package memory
 import (
 	"context"
 
-	"github.com/sidhman/clean-architecture/pkg/auth"
-	"github.com/sidhman/clean-architecture/pkg/models"
+	"github.com/sidh/clean-architecture/internal/auth"
+	"github.com/sidh/clean-architecture/internal/models"
 )
 
 type Permission struct {

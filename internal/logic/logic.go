@@ -2,10 +2,9 @@ package logic
 
 import (
 	"context"
+	"errors"
 
-	"github.com/pkg/errors"
-
-	"github.com/sidhman/clean-architecture/pkg/models"
+	"github.com/sidh/clean-architecture/internal/models"
 )
 
 var (
@@ -15,6 +14,8 @@ var (
 	ErrAuthFailed = errors.New("failed to authenticate")
 	// ErrActionFailed failed to perform action
 	ErrActionFailed = errors.New("action failed")
+	// ErrKeyNotFound ...
+	ErrKeyNotFound = errors.New("key not found")
 )
 
 // Core is the main interface for service logic

@@ -2,11 +2,12 @@ package safe
 
 import (
 	"context"
+	"errors"
 
-	"github.com/sidhman/clean-architecture/pkg/auth"
-	"github.com/sidhman/clean-architecture/pkg/logic"
-	"github.com/sidhman/clean-architecture/pkg/models"
-	"github.com/sidhman/clean-architecture/pkg/storage"
+	"github.com/sidh/clean-architecture/internal/auth"
+	"github.com/sidh/clean-architecture/internal/logic"
+	"github.com/sidh/clean-architecture/internal/models"
+	"github.com/sidh/clean-architecture/internal/storage"
 )
 
 var _ logic.Core = &Core{}
@@ -63,6 +64,10 @@ func (c *Core) Load(ctx context.Context, user, key string) (models.Value, error)
 
 	value, err := c.store.Load(ctx, key)
 	if err != nil {
+		if errors.Is(err, storage.ErrKeyNotFound) {
+			return models.Value{}, logic.ErrKeyNotFound
+		}
+
 		return models.Value{}, logic.ErrActionFailed
 	}
 

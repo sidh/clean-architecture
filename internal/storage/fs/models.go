@@ -3,7 +3,7 @@ package fs
 import (
 	"encoding/json"
 
-	"github.com/sidhman/clean-architecture/pkg/models"
+	"github.com/sidh/clean-architecture/internal/models"
 )
 
 type intPtr struct {

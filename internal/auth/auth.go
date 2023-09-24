@@ -2,10 +2,9 @@ package auth
 
 import (
 	"context"
+	"errors"
 
-	"github.com/pkg/errors"
-
-	"github.com/sidhman/clean-architecture/pkg/models"
+	"github.com/sidh/clean-architecture/internal/models"
 )
 
 var (

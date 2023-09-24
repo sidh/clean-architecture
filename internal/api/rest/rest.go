@@ -2,11 +2,10 @@ package rest
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 
-	"io/ioutil"
-
-	"github.com/sidhman/clean-architecture/pkg/logic"
+	"github.com/sidh/clean-architecture/internal/logic"
 )
 
 // Server implements HTTP server
@@ -55,7 +54,7 @@ func (s *Server) handleStore(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	value, err := ioutil.ReadAll(r.Body)
+	value, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, ErrValueMissing.Error(), 400)
 		return
@@ -63,7 +62,7 @@ func (s *Server) handleStore(w http.ResponseWriter, r *http.Request) {
 
 	var uv userValue
 	if err := uv.Unmarshal(value); err != nil {
-		http.Error(w, ErrValueInvalid.Error(), 400)
+		http.Error(w, fmt.Errorf(ErrValueInvalid.Error()+": %w", err).Error(), 400)
 		return
 	}
 
@@ -105,6 +104,9 @@ func (s *Server) handleLoad(w http.ResponseWriter, r *http.Request) {
 			fallthrough
 		case logic.ErrActionDenied:
 			http.Error(w, ErrForbidden.Error(), 403)
+			return
+		case logic.ErrKeyNotFound:
+			http.Error(w, ErrKeyNotFound.Error(), 404)
 			return
 		case logic.ErrActionFailed:
 			fallthrough

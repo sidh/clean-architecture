@@ -3,11 +3,10 @@ package fs
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 
-	"github.com/sidhman/clean-architecture/pkg/models"
-	"github.com/sidhman/clean-architecture/pkg/storage"
+	"github.com/sidh/clean-architecture/internal/models"
+	"github.com/sidh/clean-architecture/internal/storage"
 )
 
 var _ storage.Storage = &Storage{}
@@ -31,7 +30,7 @@ func (s *Storage) Store(ctx context.Context, key string, value models.Value) err
 	}
 
 	path := formatFilePath(s.path, key)
-	if err := ioutil.WriteFile(path, data, 0600); err != nil {
+	if err := os.WriteFile(path, data, 0600); err != nil {
 		if os.IsPermission(err) {
 			fmt.Printf("Failed to access file at '%s': %s", path, err)
 		} else {
@@ -47,7 +46,7 @@ func (s *Storage) Store(ctx context.Context, key string, value models.Value) err
 // Load loads value for given key
 func (s *Storage) Load(ctx context.Context, key string) (models.Value, error) {
 	path := formatFilePath(s.path, key)
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		if os.IsPermission(err) {
 			fmt.Printf("Failed to access file at '%s': %s", path, err)
